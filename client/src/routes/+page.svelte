@@ -14,8 +14,6 @@
 	const endpoint = import.meta.env.VITE_API_ENDPOINT;
 	axios.defaults.baseURL = endpoint;
 
-	console.log(endpoint)
-
 	let toastMessage: string;
 
 	let totalUpload = 0;
