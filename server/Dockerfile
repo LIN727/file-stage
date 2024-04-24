@@ -21,9 +21,10 @@ RUN --mount=type=cache,target=/root/.npm \
 
 WORKDIR /usr/src/app
 
-COPY package.json .
 COPY pnpm-lock.yaml .
-RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
+
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=cache,target=/root/.local/share/pnpm/store \
     pnpm install --prod --frozen-lockfile
 
 # Run the application as a non-root user.
