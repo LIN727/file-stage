@@ -9,6 +9,9 @@
 ARG NODE_VERSION=18.18.1
 ARG PNPM_VERSION=8.12.1
 
+ARG VITE_API_BASE_URL
+ARG VITE_API_KEY
+
 ################################################################################
 # Use node image for base image for all stages.
 FROM node:${NODE_VERSION}-alpine as base
@@ -56,6 +59,10 @@ FROM base as final
 
 # Use production node environment by default.
 ENV NODE_ENV production
+
+# Set environment variables during the build process
+ENV VITE_API_ENDPOINT=$VITE_API_ENDPOINT
+ENV VITE_WS_ENDPOINT=$VITE_WS_ENDPOINT
 
 # Run the application as a non-root user.
 USER node

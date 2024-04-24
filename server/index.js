@@ -42,10 +42,12 @@ app.use(express.json());
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
+const SOCKET_HOST = process.env.SOCKET_HOST || "http://192.168.3.29";
+
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://192.168.3.29:5173",
+    origin: `${SOCKET_HOST}:5173`,
   },
 });
 const namespace = io.of(/^\/channel-\d+$/);
