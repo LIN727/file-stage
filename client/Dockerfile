@@ -36,6 +36,13 @@ RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
 # Create a stage for building the application.
 FROM deps as build
 
+# Download additional development dependencies before building, as some projects require
+# "devDependencies" to be installed to build. If you don't need this, remove this step.
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
+    --mount=type=cache,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile
+
 # Copy the rest of the source files into the image.
 COPY . .
 # Run the build script.
