@@ -8,12 +8,11 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
-  api:
+  server:
     build:
       context: .
     environment:
       NODE_ENV: production
-      DB_URL: mongodb://database/file-stage
     ports:
       - 1028:1028
 

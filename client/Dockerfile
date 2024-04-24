@@ -31,10 +31,10 @@ FROM base as deps
 # Leverage a cache mount to /root/.local/share/pnpm/store to speed up subsequent builds.
 # Leverage bind mounts to package.json and pnpm-lock.yaml to avoid having to copy them
 # into this layer.
-# RUN --mount=type=bind,source=package.json,target=package.json \
-#     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
-#     --mount=type=cache,target=/root/.local/share/pnpm/store \
-#     pnpm install --prod --frozen-lockfile
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
+    --mount=type=cache,target=/root/.local/share/pnpm/store \
+    pnpm install --prod --frozen-lockfile
 
 ################################################################################
 # Create a stage for building the application.
@@ -42,13 +42,10 @@ FROM deps as build
 
 # Download additional development dependencies before building, as some projects require
 # "devDependencies" to be installed to build. If you don't need this, remove this step.
-# RUN --mount=type=bind,source=package.json,target=package.json \
-#     --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
-#     --mount=type=cache,target=/root/.local/share/pnpm/store \
-#     pnpm install --frozen-lockfile
-
-COPY package.json ./
-RUN pnpm install --prod
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=pnpm-lock.yaml,target=pnpm-lock.yaml \
+    --mount=type=cache,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile
 
 # Copy the rest of the source files into the image.
 COPY . .
@@ -71,13 +68,12 @@ ENV VITE_WS_ENDPOINT=$VITE_WS_ENDPOINT
 USER node
 
 # Copy package.json so that package manager commands can be used.
-# COPY package.json .
+COPY package.json .
 
 # Copy the production dependencies from the deps stage and also
 # the built application from the build stage into the image.
-# COPY --from=deps /usr/src/app/node_modules ./node_modules
-# COPY --from=build /usr/src/app/build ./build
-COPY . .
+COPY --from=deps /usr/src/app/node_modules ./node_modules
+COPY --from=build /usr/src/app/build ./build
 
 # Expose the port that the application listens on.
 EXPOSE 5173
