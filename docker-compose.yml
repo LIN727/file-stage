@@ -4,12 +4,10 @@ services:
     extends:
       file: ./client/compose.yaml
       service: web
-    image: docker.io/kevinwutech/devops:frontend
   backend:
     extends:
       file: ./server/compose.yaml
       service: api
-    image: docker.io/kevinwutech/devops:backend
   database:
     image: mongo:4.0-xenial
     ports:
