@@ -16,6 +16,7 @@ services:
       DB_URL: mongodb://database/file-stage
     ports:
       - 1028:1028
+    image: kevinwutech/devops:api1.0
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to
