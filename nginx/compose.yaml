@@ -1,0 +1,8 @@
+services:
+  proxy:
+    build:
+      context: .
+    ports:
+      - 8080:80
+    image: kevinwutech/devops:proxy1.0
+    restart: always

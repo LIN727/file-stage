@@ -13,7 +13,7 @@ FROM node:${NODE_VERSION}-alpine
 
 # Use production node environment by default.
 ENV NODE_ENV production
-ENV SOCKET_HOST=$SOCKET_HOST
+ENV DB_URL mongodb://192.168.3.29:27017/file-stage
 
 # Install pnpm.
 RUN --mount=type=cache,target=/root/.npm \

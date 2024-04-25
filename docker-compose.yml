@@ -8,11 +8,7 @@ services:
     extends:
       file: ./server/compose.yaml
       service: api
-  database:
-    image: mongo:4.0-xenial
-    ports:
-      - "27017:27017"
-    volumes:
-      - file-stage:/data/db
-volumes:
-  file-stage:
+  nginx:
+    extends:
+      file: ./nginx/compose.yaml
+      service: proxy

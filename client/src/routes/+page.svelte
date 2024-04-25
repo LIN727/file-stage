@@ -11,8 +11,7 @@
 	import { backOut } from 'svelte/easing';
 	import { fly, blur } from 'svelte/transition';
 
-	const endpoint = import.meta.env.VITE_API_ENDPOINT;
-	axios.defaults.baseURL = endpoint;
+	axios.defaults.baseURL = '/api';
 
 	let toastMessage: string;
 
@@ -22,8 +21,7 @@
 
 	let dir = 1;
 
-	const wsEndpoint = import.meta.env.VITE_WS_ENDPOINT;
-	const socket = io(`${wsEndpoint}/channel-${Date.now()}`);
+	const socket = io(`/channel-${Date.now()}`);
 
 	socket.on('connect', () => console.log('✅ Connected to WS Server'));
 	socket.on('disconnect', () => console.log('❌ Disconnected from WS Server'));
