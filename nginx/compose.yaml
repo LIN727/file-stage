@@ -5,6 +5,6 @@ services:
     ports:
       - 8080:80
     volumes:
-      - ./default.conf:/etc/nginx/default.conf
+      - ./default.conf:/etc/nginx/default.conf:ro
     image: kevinwutech/devops:proxy1.0
     restart: always
