@@ -11,7 +11,7 @@ services:
   nginx:
     extends:
       file: ./nginx/compose.yaml
-      service: proxy
+      service: nginx
   database:
     image: mongo:4.0-xenial
     ports:
