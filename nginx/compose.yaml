@@ -3,7 +3,7 @@ services:
     build:
       context: .
     ports:
-      - 8080:80
+      - 3001:80
     volumes:
       - ./default.conf:/etc/nginx/default.conf:ro
     image: kevinwutech/devops:nginx-1.0
