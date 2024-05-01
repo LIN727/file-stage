@@ -322,19 +322,19 @@
 							<div class="card card-compact bg-base-100 shadow-xl">
 								<div class="card-body">
 									<h2 class="card-title flex items-baseline md:items-center" title={asset.filename}>
-										<span class="line-clamp-2 md:line-clamp-1 break-all text-lg md:text-base"
+										<span class="line-clamp-2 md:line-clamp-1 break-all text-base md:text-lg"
 											>{asset.name}</span
 										>
-										<span class="badge badge-secondary text-sm md:text-base">{asset.ext}</span>
+										<span class="badge badge-secondary text-xs md:text-sm">{asset.ext}</span>
 									</h2>
-									<p class="text-primary">Upload Date: {asset.uploadDate}</p>
-									<p class="text-primary">Size: {asset.size}</p>
+									<p class="text-primary text-xs md:text-base">Upload Date: {asset.uploadDate}</p>
+									<p class="text-primary text-xs md:text-base">Size: {asset.size}</p>
 									<div class="card-actions justify-end">
-										<button class="btn btn-ghost" on:click={() => showDeleteDialog(asset.id)}>
+										<button class="btn btn-ghost text-xs md:text-sm" on:click={() => showDeleteDialog(asset.id)}>
 											Delete
 										</button>
 										<button
-											class="btn btn-primary"
+											class="btn btn-primary text-xs md:text-sm"
 											id="download"
 											type="button"
 											data-id={asset.id}
