@@ -218,54 +218,96 @@
 		const modal = document.getElementById('upload_progress_modal') as HTMLDialogElement;
 		modal.showModal();
 	}
+
+	function handleDragStart() {
+		const button = document.querySelector('#upload-btn') as HTMLDivElement;
+		if (button) {
+			button.classList.add('opacity-0', 'scale-90');
+		}
+	}
+
+	function handleDragEnd() {
+		const button = document.querySelector('#upload-btn') as HTMLDivElement;
+		if (button) {
+			button.classList.remove('opacity-0', 'scale-90');
+		}
+	}
 </script>
 
-<svelte:window on:keydown={handleKeyDown} />
+<svelte:window
+	on:keydown={handleKeyDown}
+	on:touchmove={handleDragStart}
+	on:touchend={handleDragEnd}
+/>
 
 <div class="flex flex-col min-h-screen">
-	<div class="p-6 flex justify-between items-center md:py-10 md:px-12">
-		<div>
-			<h1 class="text-4xl text-primary font-bold">File Stage</h1>
-			<p class="text-lg text-slate-500">Share uploaded files</p>
+	<div class="p-6 flex flex-col justify-between md:items-center md:flex-row md:py-10 md:px-12">
+		<div class="flex justify-between">
+			<div>
+				<h1 class="text-3xl md:text-4xl text-primary font-bold">File Stage</h1>
+				<p class="text-md md:text-lg text-slate-500">Share uploaded files</p>
+			</div>
+			{#key $assets.length}
+				<span
+					class="font-mono text-4xl text-primary drop-shadow md:hidden"
+					in:fly={{ duration: 300, y: 20 * dir, easing: backOut }}
+				>
+					{$assets.length}
+				</span>
+			{/key}
 		</div>
-		<div class="flex gap-5">
+		<div class="flex gap-5 flex-col md:flex-row mt-5 md:m-0">
 			<label class="input input-bordered flex items-center gap-2">
 				<input
 					id="search"
 					type="text"
-					class="grow"
+					class="flex-auto"
 					placeholder="Search"
 					on:input={searchFile}
 					on:compositionstart={handleCompositionStart}
 					on:compositionend={(evt) => handleCompositionEnd(evt.data)}
 				/>
-				<kbd class="kbd kbd-sm">⌘</kbd>
-				<kbd class="kbd kbd-sm">K</kbd>
+				<kbd class="kbd kbd-sm hidden md:block">⌘</kbd>
+				<kbd class="kbd kbd-sm hidden md:block">K</kbd>
 			</label>
 			<input
 				type="file"
-				class="file-input file-input-bordered w-full max-w-xs"
-				on:change={(evt) => uploadFiles(evt)}
+				class="file-input file-input-bordered w-full hidden md:block md:max-w-xs"
+				on:change={uploadFiles}
 				multiple
 			/>
+			<div class="md:hidden fixed bottom-10 left-1/2 -translate-x-1/2 w-full px-6 z-10">
+				<button class="btn btn-primary w-full" id="upload-btn">
+					Upload File
+					<input type="file" class="opacity-0 absolute inset-0" on:change={uploadFiles} multiple />
+				</button>
+			</div>
 		</div>
 	</div>
 	{#if $assets.length > 0 || $uploadTask.length > 0}
-		<div class="p-6 bg-base-200 md:p-12 flex-auto" transition:fly={{ y: 20, duration: 300 }}>
+		<div
+			class="p-6 bg-base-200 md:p-12 flex-auto pb-32 md:pb-0"
+			transition:fly={{ y: 20, duration: 300 }}
+		>
 			<div class="flex justify-between items-center">
 				{#key $assets.length}
 					<span
-						class="font-mono text-5xl mb-5 text-primary drop-shadow"
+						class="font-mono text-5xl mb-5 text-primary drop-shadow hidden md:block"
 						in:fly={{ duration: 300, y: 20 * dir, easing: backOut }}
 					>
 						{$assets.length}
 					</span>
 				{/key}
 				{#if $uploadTask.length > 0}
-					<button class="text-primary btn btn-ghost" on:click={showUploadTaskDialog}>
-						{`${$uploadTask.length} ${$uploadTask.length > 1 ? 'files' : 'file'} uploading...`}
+					<button
+						class="text-primary btn btn-ghost flex mb-3 md:mb-0 w-full md:w-auto"
+						on:click={showUploadTaskDialog}
+					>
+						<span class="flex-none">
+							{`${$uploadTask.length} ${$uploadTask.length > 1 ? 'files' : 'file'} uploading...`}
+						</span>
 						<progress
-							class="progress progress-primary w-56 ml-2"
+							class="progress progress-primary md:w-56 ml-2 w-auto flex-auto"
 							value={totalUploadProgress}
 							max="100"
 						>
@@ -279,9 +321,11 @@
 						<li transition:blur>
 							<div class="card card-compact bg-base-100 shadow-xl">
 								<div class="card-body">
-									<h2 class="card-title" title={asset.filename}>
-										<span class="line-clamp-1 break-all">{asset.name}</span>
-										<div class="badge badge-secondary">{asset.ext}</div>
+									<h2 class="card-title flex items-baseline md:items-center" title={asset.filename}>
+										<span class="line-clamp-2 md:line-clamp-1 break-all text-lg md:text-base"
+											>{asset.name}</span
+										>
+										<span class="badge badge-secondary text-sm md:text-base">{asset.ext}</span>
 									</h2>
 									<p class="text-primary">Upload Date: {asset.uploadDate}</p>
 									<p class="text-primary">Size: {asset.size}</p>
@@ -367,7 +411,7 @@
 	</form>
 </dialog>
 
-<div class="toast hidden">
+<div class="toast toast-center toast-middle md:toast-end md:toast-bottom hidden">
 	<div class="alert">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
