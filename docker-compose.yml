@@ -1,0 +1,22 @@
+version: "3"
+services:
+  frontend:
+    extends:
+      file: ./client/compose.yaml
+      service: web
+  backend:
+    extends:
+      file: ./server/compose.yaml
+      service: api
+  nginx:
+    extends:
+      file: ./nginx/compose.yaml
+      service: nginx
+  database:
+    image: mongo:4.0-xenial
+    ports:
+      - "27017:27017"
+    volumes:
+      - file-stage:/data/db
+volumes:
+  file-stage:
