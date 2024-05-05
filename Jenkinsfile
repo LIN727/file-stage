@@ -46,7 +46,7 @@ pipeline {
         }
         stage('Deploy to kubernetes') {
             steps {
-                sh 'kubectl apply -f application.yaml'
+                sh 'kubectl apply -f argocd-app-config.yaml'
             }
         }
     }
