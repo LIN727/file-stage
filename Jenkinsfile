@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     git branch: 'main', credentialsId: 'Github', url: 'https://github.com/LIN727/file-stage.git'
-                }   
+                }
             }
         }
         stage('Print infomation') {
