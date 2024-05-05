@@ -267,8 +267,8 @@
 					on:compositionstart={handleCompositionStart}
 					on:compositionend={(evt) => handleCompositionEnd(evt.data)}
 				/>
-				<kbd class="kbd kbd-sm hidden md:block">⌘</kbd>
-				<kbd class="kbd kbd-sm hidden md:block">K</kbd>
+				<kbd class="kbd kbd-sm hidden md:flex">⌘</kbd>
+				<kbd class="kbd kbd-sm hidden md:flex">K</kbd>
 			</label>
 			<input
 				type="file"
