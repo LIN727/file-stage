@@ -245,7 +245,7 @@
 		<div class="flex justify-between">
 			<div>
 				<h1 class="text-3xl md:text-4xl text-primary font-bold">File Stage</h1>
-				<p class="text-md md:text-lg text-slate-500">Share uploaded files</p>
+				<p class="text-md md:text-lg text-slate-500">Manage uploaded files</p>
 			</div>
 			{#key $assets.length}
 				<span
