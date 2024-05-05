@@ -92,7 +92,7 @@ metadata:
   name: backend
   namespace: file-stage
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       io.kompose.service: backend
@@ -189,7 +189,7 @@ metadata:
   name: frontend
   namespace: file-stage
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       io.kompose.service: frontend
