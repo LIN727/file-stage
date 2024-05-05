@@ -44,5 +44,10 @@ pipeline {
                 sh 'docker compose ps'
             }
         }
+        stage('Deploy to kubernetes') {
+            steps {
+                sh 'kubectl apply -f application.yaml'
+            }
+        }
     }
 }

@@ -1,3 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: file-stage
+  namespace: file-stage
+
 ---
 apiVersion: v1
 kind: Service
@@ -73,13 +79,6 @@ spec:
       targetPort: 80
   selector:
     io.kompose.service: nginx
-
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: file-stage
-  namespace: file-stage
 
 ---
 apiVersion: apps/v1
