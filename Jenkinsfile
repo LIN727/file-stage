@@ -45,7 +45,7 @@ pipeline {
             }
         }
         stage('Deploy to kubernetes') {
-            stesp {
+            steps {
                 sh 'kubectl apply -f application.yaml'
             }
         }
