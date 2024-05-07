@@ -9,9 +9,27 @@ pipeline {
         stage('Pull repository') {
             steps {
                 script {
-                    git branch: 'main', credentialsId: 'Github', url: 'https://github.com/LIN727/file-stage.git'
+                    git branch: 'main', url: 'https://github.com/LIN727/file-stage.git'
                 }
             }
+        }
+        stage("Sonarqube analysis") {
+            environment {
+                SCANNER_HOME=tool 'sonar-scanner'
+            }
+            steps {
+                withSonarQubeEnv('sonar-server') {
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=FileStage \
+                    -Dsonar.projectKey=FileStage '''
+                }
+            }
+        }
+        stage("Quality gate") {
+           steps {
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'Sonar-token' 
+                }
+            } 
         }
         stage('Print infomation') {
             steps {
