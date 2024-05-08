@@ -73,12 +73,10 @@ metadata:
   name: nginx
   namespace: file-stage
 spec:
-  type: NodePort
   ports:
     - name: "3001"
       port: 3001
       targetPort: 80
-      nodePort: 30001
   selector:
     io.kompose.service: nginx
 
