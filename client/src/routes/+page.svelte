@@ -129,7 +129,7 @@
 					const uploadDate = new Date(asset.uploadDate).toLocaleDateString().replace(/\//g, '.');
 					const size = toHumanReadableSize(asset.length);
 					const name = asset.filename.split(/\.([^.]*)$/)[0];
-					const ext = asset.filename.split(/\.([^.]*)$/)[1].toUpperCase();
+					const ext = asset.filename.split(/\.([^.]*)$/)[1]?.toUpperCase() || 'null';
 					return { id: asset._id, filename: asset.filename, name, uploadDate, size, ext } as Asset;
 				});
 				assets.set(result);
